@@ -17,3 +17,7 @@ git clone --bare https://github.com/ft-aslan/.dotfiles.git $HOME/.dotfiles
 ```sh
 git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager-core.exe"
 ```
+
+
+### Neovim Dependencies
+- [riprep](https://github.com/BurntSushi/ripgrep)
