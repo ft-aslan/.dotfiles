@@ -21,3 +21,4 @@ git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git
 
 ### Neovim Dependencies
 - [riprep](https://github.com/BurntSushi/ripgrep)
+- (Optional) [bob](https://github.com/MordechaiHadad/bob) a version manager for nvim
