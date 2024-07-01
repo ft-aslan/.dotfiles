@@ -22,3 +22,4 @@ git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git
 ### Neovim Dependencies
 - [riprep](https://github.com/BurntSushi/ripgrep)
 - (Optional) [bob](https://github.com/MordechaiHadad/bob) a version manager for nvim
+- [lazygit](https://github.com/jesseduffield/lazygit) (you can install it with go easily)
