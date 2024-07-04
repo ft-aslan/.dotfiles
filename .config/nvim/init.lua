@@ -94,7 +94,10 @@ vim.g.maplocalleader = ' '
 
 -- Neovide Config
 if vim.g.neovide then
+  vim.o.guifont = 'JetBrainsMono Nerd Font:h11'
   vim.g.neovide_cursor_animate_in_insert_mode = false
+else
+  vim.o.guifont = 'JetBrainsMono Nerd Font:h12'
 end
 
 -- Set Language to English
@@ -105,7 +108,6 @@ vim.api.nvim_exec(
 ]],
   false
 )
-vim.o.guifont = 'JetBrainsMono Nerd Font:h12'
 -- colors is for nvim-notify. 24-bit colors are required.
 vim.opt.termguicolors = true
 vim.o.mousemoveevent = true
@@ -1104,7 +1106,7 @@ else
         -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
         vim.cmd.colorscheme 'gruvbox-material'
         -- You can configure highlights by doing something like
-        vim.cmd.hi 'Comment gui=none'
+        -- vim.cmd.hi 'Comment gui=none'
         vim.cmd.hi 'CursorLineNr guifg=#e78a4e ctermfg=green'
         local hi_groups = require 'custom.highlights.gruvbox-material'
         hi_groups()
