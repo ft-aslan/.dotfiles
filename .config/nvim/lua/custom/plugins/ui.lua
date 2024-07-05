@@ -131,7 +131,19 @@ return {
       })
     end,
   },
-
+  -- winbar
+  {
+    'utilyre/barbecue.nvim',
+    name = 'barbecue',
+    enabled = false,
+    event = 'VeryLazy',
+    version = '*',
+    dependencies = {
+      'SmiteshP/nvim-navic',
+      'nvim-tree/nvim-web-devicons', -- optional dependency
+    },
+    opts = {},
+  },
   -- statusline
   {
     'nvim-lualine/lualine.nvim',
@@ -295,6 +307,7 @@ return {
             { action = "ene | startinsert", desc = " New file", icon = " ", key = "n" },
             { action = "Telescope oldfiles", desc = " Recent files", icon = " ", key = "r" },
             { action = "Telescope live_grep", desc = " Find text", icon = " ", key = "g" },
+            { action = "Autosession delete", desc = " Delete session", icon = " ", key = "d" },
             { action = "e $MYVIMRC | cd %:p:h", desc = " Config", icon = " ", key = "c" },
             -- { action = 'lua require("persistence").load()', desc = " Restore Session", icon = " ", key = "s" },
             { action = "Lazy", desc = " Lazy", icon = "󰒲 ", key = "l" },
