@@ -24,3 +24,4 @@ git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git
 - [fd](https://github.com/sharkdp/fd)
 - (Optional) [bob](https://github.com/MordechaiHadad/bob) a version manager for nvim
 - [lazygit](https://github.com/jesseduffield/lazygit) (you can install it with go easily)
+- [git-cli](https://github.com/cli/cli) for [octo.nvim](https://github.com/pwntester/octo.nvim)
