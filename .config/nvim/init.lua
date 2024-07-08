@@ -957,12 +957,12 @@ else
             -- `friendly-snippets` contains a variety of premade snippets.
             --    See the README about individual language/framework/plugin snippets:
             --    https://github.com/rafamadriz/friendly-snippets
-            -- {
-            --   'rafamadriz/friendly-snippets',
-            --   config = function()
-            --     require('luasnip.loaders.from_vscode').lazy_load()
-            --   end,
-            -- },
+            {
+              'rafamadriz/friendly-snippets',
+              config = function()
+                require('luasnip.loaders.from_vscode').lazy_load()
+              end,
+            },
           },
         },
         'saadparwaiz1/cmp_luasnip',
@@ -974,13 +974,17 @@ else
         'hrsh7th/cmp-path',
         'hrsh7th/cmp-cmdline',
         'hrsh7th/cmp-buffer',
+        'onsails/lspkind.nvim',
+        'roobert/tailwindcss-colorizer-cmp.nvim',
         -- 'hrsh7th/cmp-nvim-lua',
       },
       config = function()
         -- See `:help cmp`
         local cmp = require 'cmp'
         local luasnip = require 'luasnip'
-        luasnip.config.setup {}
+        local lspkind = require 'lspkind'
+        local tailwindcss_colorizer_cmp = require 'tailwindcss-colorizer-cmp'
+        -- luasnip.config.setup {}
         cmp.setup.cmdline('/', {
           completion = { completeopt = 'menu,menuone,noselect,noinsert' },
           mapping = cmp.mapping.preset.cmdline(),
@@ -1006,28 +1010,45 @@ else
           },
           window = {
             completion = {
-              border = 'none', -- single|rounded|none
+              border = 'rounded', -- single|rounded|none
               -- custom colors
-              winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:CursorLineBG,Search:None', -- BorderBG|FloatBorder
+              winhighlight = 'Normal:Normal,FloatBorder:BorderBG,CursorLine:CursorLine,Search:Search', -- BorderBG|FloatBorder
               side_padding = 1, -- padding at sides
               col_offset = -1, -- move floating box left or right
             },
             documentation = {
-              border = 'none', -- single|rounded|none
+              border = 'rounded', -- single|rounded|none
               -- custom colors
-              winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:CursorLineBG,Search:None', -- BorderBG|FloatBorder
+              winhighlight = 'Normal:Normal,FloatBorder:BorderBG,CursorLine:CursorLine,Search:Search', -- BorderBG|FloatBorder
             },
           },
           formatting = {
             fields = { 'kind', 'abbr', 'menu' },
             expandable_indicator = true,
-            format = function(_, item)
-              local icons = defaults.icons.kinds
-              item.menu = item.kind
-              if icons[item.kind] then
-                item.kind = icons[item.kind] .. ' '
-              end
-              return item
+            format = function(entry, item)
+              -- vscode like icons for cmp autocompletion
+              local fmt = lspkind.cmp_format {
+                -- with_text = false, -- hide kind beside the icon
+                mode = 'symbol_text',
+                maxwidth = 50,
+                ellipsis_char = '...',
+                before = tailwindcss_colorizer_cmp.formatter, -- prepend tailwindcss-colorizer
+              }(entry, item)
+
+              -- customize lspkind format
+              local strings = vim.split(fmt.kind, '%s', { trimempty = true })
+
+              -- strings[1] -> default icon
+              -- strings[2] -> kind
+
+              -- set different icon styles
+              fmt.kind = ' ' .. (strings[1] or '') -- just use the default icon
+
+              -- append customized kind text
+              fmt.kind = fmt.kind .. ' ' -- just an extra space at the end
+              fmt.menu = strings[2] ~= nil and ('  ' .. (strings[2] or '')) or ''
+
+              return fmt
             end,
           },
           -- experimental = {
@@ -1092,26 +1113,26 @@ else
       end,
     },
 
-    { -- You can easily change to a different colorscheme.
-      -- Change the name of the colorscheme plugin below, and then
-      -- change the command in the config to whatever the name of that colorscheme is
-      --
-      -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`
-      'sainnhe/gruvbox-material',
-      lazy = false, -- make sure we load this during startup if it is your main colorscheme
-      priority = 1000, -- make sure to load this before all the other start plugins
-      init = function()
-        -- Load the colorscheme here.
-        -- Like many other themes, this one has different styles, and you could load
-        -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-        vim.cmd.colorscheme 'gruvbox-material'
-        -- You can configure highlights by doing something like
-        -- vim.cmd.hi 'Comment gui=none'
-        vim.cmd.hi 'CursorLineNr guifg=#e78a4e ctermfg=green'
-        local hi_groups = require 'custom.highlights.gruvbox-material'
-        hi_groups()
-      end,
-    },
+    -- { -- You can easily change to a different colorscheme.
+    --   -- Change the name of the colorscheme plugin below, and then
+    --   -- change the command in the config to whatever the name of that colorscheme is
+    --   --
+    --   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`
+    --   'sainnhe/gruvbox-material',
+    --   lazy = false, -- make sure we load this during startup if it is your main colorscheme
+    --   priority = 1000, -- make sure to load this before all the other start plugins
+    --   init = function()
+    --     -- Load the colorscheme here.
+    --     -- Like many other themes, this one has different styles, and you could load
+    --     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+    --     vim.cmd.colorscheme 'gruvbox-material'
+    --     -- You can configure highlights by doing something like
+    --     -- vim.cmd.hi 'Comment gui=none'
+    --     vim.cmd.hi 'CursorLineNr guifg=#e78a4e ctermfg=green'
+    --     -- local hi_groups = require 'custom.highlights.gruvbox-material'
+    --     -- hi_groups()
+    --   end,
+    -- },
 
     -- Highlight todo, notes, etc in comments
     { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
