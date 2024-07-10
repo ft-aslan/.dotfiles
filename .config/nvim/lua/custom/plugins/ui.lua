@@ -82,6 +82,7 @@ return {
   {
     'akinsho/bufferline.nvim',
     event = 'VeryLazy',
+    enabled = false,
     version = '*',
     dependencies = 'nvim-tree/nvim-web-devicons',
     keys = {
@@ -90,10 +91,8 @@ return {
       { '<leader>bo', '<Cmd>BufferLineCloseOthers<CR>', desc = 'Delete other buffers' },
       { '<leader>br', '<Cmd>BufferLineCloseRight<CR>', desc = 'Delete buffers to the right' },
       { '<leader>bl', '<Cmd>BufferLineCloseLeft<CR>', desc = 'Delete buffers to the left' },
-      { '<leader>bd', '<Cmd>bd<CR>', desc = 'Delete current buffer' },
-      { '<C-x>', '<Cmd>bd<CR>', desc = 'Delete current buffer' },
-      -- { '<S-h>', '<cmd>BufferLineCyclePrev<cr>', desc = 'Prev buffer' },
-      -- { '<S-l>', '<cmd>BufferLineCycleNext<cr>', desc = 'Next buffer' },
+      { '<leader>bd', '<Cmd>BufferClose<CR>', desc = 'Delete current buffer' },
+      { '<C-x>', '<Cmd>BufferClose<CR>', desc = 'Delete current buffer' },
       { '[b', '<cmd>BufferLineCyclePrev<cr>', desc = 'Prev buffer' },
       { ']b', '<cmd>BufferLineCycleNext<cr>', desc = 'Next buffer' },
     },
@@ -131,6 +130,47 @@ return {
         end,
       })
     end,
+  },
+  {
+    'romgrk/barbar.nvim',
+    event = 'BufEnter',
+    dependencies = {
+      'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
+      'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
+    },
+    keys = {
+      { '<leader>bp', '<Cmd>BufferPin<CR>', desc = 'Toggle pin' },
+      { '<leader>bP', '<Cmd>BufferCloseAllButPinned<CR>', desc = 'Delete non-pinned buffers' },
+      { '<leader>bo', '<Cmd>BufferCloseAllButCurrent<CR>', desc = 'Delete other buffers' },
+      { '<leader>br', '<Cmd>BufferCloseBuffersRight<CR>', desc = 'Delete buffers to the right' },
+      { '<leader>bl', '<Cmd>BufferCloseBuffersLeft<CR>', desc = 'Delete buffers to the left' },
+      { '<leader>bd', '<Cmd>BufferClose<CR>', desc = 'Delete current buffer' },
+      { '<leader>bb', '<Cmd>BufferPick<CR>', desc = 'Buffer picker' },
+      { '<C-x>', '<Cmd>BufferClose<CR>', desc = 'Delete current buffer' },
+      { '[b', '<cmd>BufferPrevious<cr>', desc = 'Prev buffer' },
+      { ']b', '<cmd>BufferNext<cr>', desc = 'Next buffer' },
+    },
+    init = function()
+      vim.g.barbar_auto_setup = false
+    end,
+    opts = {
+      -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
+      -- animation = true,
+      -- insert_at_start = true,
+      -- …etc.
+      sidebar_filetypes = {
+        ['neo-tree'] = { event = 'BufWipeout' },
+      },
+      icons = {
+        diagnostics = {
+          [vim.diagnostic.severity.ERROR] = { enabled = true },
+          [vim.diagnostic.severity.WARN] = { enabled = false },
+          [vim.diagnostic.severity.INFO] = { enabled = false },
+          [vim.diagnostic.severity.HINT] = { enabled = true },
+        },
+      },
+    },
+    version = '^1.0.0', -- optional: only update when a new 1.x version is released
   },
   -- winbar
   {
