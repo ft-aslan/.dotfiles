@@ -96,6 +96,8 @@ vim.g.maplocalleader = ' '
 if vim.g.neovide then
   vim.o.guifont = 'JetBrainsMono Nerd Font:h11'
   vim.g.neovide_cursor_animate_in_insert_mode = false
+  local default_path = vim.fn.expand '~'
+  vim.api.nvim_set_current_dir(default_path)
 else
   vim.o.guifont = 'JetBrainsMono Nerd Font:h12'
 end
@@ -723,8 +725,22 @@ else
         { 'folke/neodev.nvim', opts = {} },
       },
       opts = {
+        -- Enable this to enable the builtin LSP inlay hints on Neovim >= 0.10.0
+        -- Be aware that you also will need to properly configure your LSP server to
+        -- provide the inlay hints.
+        inlay_hints = {
+          enabled = true,
+        },
         diagnostics = {
           severity_sort = true,
+          virtual_text = {
+            spacing = 4,
+            source = 'if_many',
+            prefix = '●',
+            -- this will set set the prefix to a function that returns the diagnostics icon based on the severity
+            -- this only works on a recent 0.10.0 build. Will be set to "●" when not supported
+            -- prefix = "icons",
+          },
           signs = {
             text = {
               [vim.diagnostic.severity.ERROR] = ' ',
@@ -735,7 +751,7 @@ else
           },
         },
       },
-      config = function()
+      config = function(_, opts)
         -- Brief Aside: **What is LSP?**
         --
         -- LSP is an acronym you've probably heard, but might not understand what it is.
@@ -945,6 +961,46 @@ else
             end,
           },
         }
+
+        -- WARN: We gonna add inlay hints here. This code is example from LazyVim. But it is not working. Its not compatible with this config yet.
+
+        -- if vim.fn.has 'nvim-0.10' == 1 then
+        --   -- inlay hints
+        --   if opts.inlay_hints.enabled then
+        --     LazyVim.lsp.on_supports_method('textDocument/inlayHint', function(client, buffer)
+        --       if
+        --         vim.api.nvim_buf_is_valid(buffer)
+        --         and vim.bo[buffer].buftype == ''
+        --         and not vim.tbl_contains(opts.inlay_hints.exclude, vim.bo[buffer].filetype)
+        --       then
+        --         LazyVim.toggle.inlay_hints(buffer, true)
+        --       end
+        --     end)
+        --   end
+        --
+        --   -- code lens
+        --   if opts.codelens.enabled and vim.lsp.codelens then
+        --     LazyVim.lsp.on_supports_method('textDocument/codeLens', function(client, buffer)
+        --       vim.lsp.codelens.refresh()
+        --       vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'InsertLeave' }, {
+        --         buffer = buffer,
+        --         callback = vim.lsp.codelens.refresh,
+        --       })
+        --     end)
+        --   end
+        -- end
+        --
+        -- if type(opts.diagnostics.virtual_text) == 'table' and opts.diagnostics.virtual_text.prefix == 'icons' then
+        --   opts.diagnostics.virtual_text.prefix = vim.fn.has 'nvim-0.10.0' == 0 and '●'
+        --     or function(diagnostic)
+        --       local icons = LazyVim.config.icons.diagnostics
+        --       for d, icon in pairs(icons) do
+        --         if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
+        --           return icon
+        --         end
+        --       end
+        --     end
+        -- end
       end,
     },
 
