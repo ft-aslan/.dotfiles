@@ -1,7 +1,14 @@
 return {
   'folke/tokyonight.nvim',
   'sainnhe/gruvbox-material',
-  'sainnhe/everforest',
+  {
+    'neanias/everforest-nvim',
+    config = function()
+      require('everforest').setup {
+        background = 'hard',
+      }
+    end,
+  },
   {
     -- colorscheme picker
     'vague2k/huez.nvim',
