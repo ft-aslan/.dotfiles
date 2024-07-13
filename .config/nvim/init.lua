@@ -94,6 +94,7 @@ vim.g.maplocalleader = ' '
 
 -- Neovide Config
 if vim.g.neovide then
+  vim.g.neovide_no_custom_clipboard = false
   vim.o.guifont = 'JetBrainsMono Nerd Font:h11'
   vim.g.neovide_cursor_animate_in_insert_mode = false
   local default_path = vim.fn.expand '~'
