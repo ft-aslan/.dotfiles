@@ -246,7 +246,7 @@ return {
     },
     config = function()
       require('octo').setup()
-      vim.keymap.set('n', '<leader>gi', '<cmd>Octo issue list<cr>', { desc = 'Octo' })
+      vim.keymap.set('n', '<leader>gi', '<cmd>Octo issue list<cr>', { desc = 'Octo Issue List' })
     end,
   },
 }

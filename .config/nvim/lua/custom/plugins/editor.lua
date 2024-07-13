@@ -72,12 +72,15 @@ return {
   {
     'akinsho/toggleterm.nvim',
     version = '*',
-    config = true,
+    lazy = false,
+    config = function()
+      require('toggleterm').setup {
+        open_mapping = [[<c-t>]],
+      }
+    end,
     -- opts = { shell = 'nu' },
     keys = {
-      { '<leader>t', '<cmd>ToggleTerm direction=horizontal<cr>', desc = 'Open terminal' },
-      { '<C-t>', '<cmd>ToggleTerm<cr>', desc = 'Open terminal' },
-      { '<silent><C-t>', '<cmd>exe v:count1 .. "ToggleTerm"<CR>', desc = 'Open terminal' },
+      { '<leader>wt', '<cmd>ToggleTerm direction=horizontal<cr>', desc = 'Open terminal' },
     },
   },
   { 'mbbill/undotree' },
