@@ -154,45 +154,6 @@ return {
     end,
   },
   {
-    'gnikdroy/projections.nvim',
-    branch = 'dev',
-    enabled = false,
-    config = function()
-      require('projections').setup {
-        workspaces = {
-          { path = '~/Projects', patterns = {} },
-        },
-        selector_mapping = '<leader>sp',
-        show_preview = true,
-      }
-
-      -- close existing language servers when you switch projects.
-      vim.api.nvim_create_autocmd('User', {
-        pattern = 'ProjectionsPreStoreSession',
-        callback = function()
-          vim.lsp.stop_client(vim.lsp.get_clients())
-        end,
-      })
-
-      -- close file tree before saving
-      vim.api.nvim_create_autocmd('User', {
-        pattern = 'ProjectionsPreStoreSession',
-        callback = function()
-          -- nvim-tree
-          local nvim_tree_present, api = pcall(require, 'nvim-tree.api')
-          if nvim_tree_present then
-            api.tree.close()
-          end
-
-          -- neo-tree
-          if pcall(require, 'neo-tree') then
-            vim.cmd [[Neotree action=close]]
-          end
-        end,
-      })
-    end,
-  },
-  {
     {
       'rmagatti/auto-session',
       dependencies = {
@@ -213,7 +174,7 @@ return {
             buftypes_to_ignore = {}, -- list of buffer types that should not be deleted from current session when a new one is loaded
           },
         }
-        vim.keymap.set('n', '<leader>sp', require('auto-session.session-lens').search_session, {
+        vim.keymap.set('n', '<leader>fp', require('auto-session.session-lens').search_session, {
           noremap = true,
         })
       end,
