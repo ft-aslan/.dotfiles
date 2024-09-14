@@ -465,6 +465,11 @@ if vim.g.vscode then
   vim.keymap.set('n', '<leader>cr', function()
     vscode.action 'editor.action.rename'
   end)
+  vim.keymap.set({ 'n', 'x', 'i' }, '<C-n>', function()
+    vscode.with_insert(function()
+      vscode.action 'editor.action.addSelectionToNextFindMatch'
+    end)
+  end)
   vim.keymap.set('n', 'gn', 'mciw*<Cmd>nohl<CR>', { remap = true })
   require('lazy').setup {
     {
@@ -851,7 +856,7 @@ else
             -- Execute a code action, usually your cursor needs to be on top of an error
             -- or a suggestion from your LSP for this to activate.
             map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-
+            map('<leader>cd', vim.diagnostic.open_float, '[C]ode Diagnostics')
             -- Opens a popup that displays documentation about the word under your cursor
             --  See `:help K` for why this keymap
             map('K', vim.lsp.buf.hover, 'Hover Documentation')
@@ -907,6 +912,16 @@ else
         else
           vue_typescript_plugin_location = '/usr/local/lib/node_modules/@vue/typescript-plugin'
         end
+        local on_svelte_attach = function(client, bufnr)
+          vim.api.nvim_create_autocmd('BufWritePost', {
+            pattern = { '*.js', '*.ts' },
+            group = vim.api.nvim_create_augroup('svelte_ondidchangetsorjsfile', { clear = true }),
+            callback = function(ctx)
+              -- Here use ctx.match instead of ctx.file
+              client.notify('$/onDidChangeTsOrJsFile', { uri = ctx.match })
+            end,
+          })
+        end
         local servers = {
           -- clangd = {},
           -- gopls = {},
@@ -921,7 +936,7 @@ else
 
           -- this is for vue js and typescript
           -- refer to this link https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#vue-support
-          tsserver = {
+          ts_ls = {
             init_options = {
               plugins = {
                 {
@@ -940,6 +955,10 @@ else
               'svelte',
               'vue.html.javascript.ts',
             },
+          },
+
+          svelte = {
+            on_attach = on_svelte_attach,
           },
 
           lua_ls = {
