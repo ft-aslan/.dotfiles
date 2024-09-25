@@ -124,3 +124,6 @@ export PATH=$BUN_INSTALL/bin:$PATH
 
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+#nvim
+export NVIM_APPNAME="nvim-lazy"
