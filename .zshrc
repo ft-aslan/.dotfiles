@@ -125,5 +125,12 @@ export PATH=$BUN_INSTALL/bin:$PATH
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
+export PATH=$HOME/.local/bin:$PATH
+
 #nvim
 export NVIM_APPNAME="nvim-lazy"
+
+#dotnet
+export DOTNET_ROOT=$HOME/dotnet 
+export PATH=$PATH:$HOME/dotnet
+
