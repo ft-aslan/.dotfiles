@@ -131,6 +131,7 @@ export PATH=$HOME/.local/bin:$PATH
 export NVIM_APPNAME="nvim-lazy"
 
 #dotnet
-export DOTNET_ROOT=$HOME/dotnet 
-export PATH=$PATH:$HOME/dotnet
+export DOTNET_ROOT=/usr/share/dotnet 
+export PATH=$PATH:$HOME/.dotnet
+export PATH=$PATH:$HOME/.dotnet/tools
 
