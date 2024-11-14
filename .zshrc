@@ -70,7 +70,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions you-should-use)
+plugins=(git zsh-autosuggestions)
 bindkey '^Y' autosuggest-accept
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 # source $ZSH_CUSTOM/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
@@ -135,3 +135,7 @@ export DOTNET_ROOT=/usr/share/dotnet
 export PATH=$PATH:$HOME/.dotnet
 export PATH=$PATH:$HOME/.dotnet/tools
 
+#go manually installed
+export PATH=$PATH:/usr/local/go/bin
+#go installed by apps
+export PATH=$PATH:$HOME/go/bin

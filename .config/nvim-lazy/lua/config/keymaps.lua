@@ -24,4 +24,12 @@ vim.keymap.set("n", "L", "$", { noremap = true, silent = true })
 vim.keymap.set("x", "L", "$", { noremap = true, silent = true })
 vim.keymap.set("n", "H", "^", { noremap = true, silent = true })
 vim.keymap.set("x", "H", "^", { noremap = true, silent = true })
-vim.keymap.set("n", "<C-x>", LazyVim.ui.bufremove, { desc = "Delete Buffer" })
+
+vim.keymap.set("n", "<C-x>", function()
+  Snacks.bufdelete()
+end, { desc = "Delete Buffer" })
+
+vim.keymap.set("n", "<C-t>", function()
+  Snacks.terminal(nil, { cwd = LazyVim.root() })
+end, { desc = "Terminal (Root Dir)" })
+vim.keymap.set("t", "<C-t>", "<cmd>close<cr>", { desc = "Hide Terminal" })

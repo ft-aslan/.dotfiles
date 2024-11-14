@@ -1,6 +1,7 @@
 return {
   {
     "akinsho/toggleterm.nvim",
+    enabled = false,
     version = "*",
     lazy = false,
     config = function()
@@ -13,5 +14,4 @@ return {
       { "<leader>wt", "<cmd>ToggleTerm direction=horizontal<cr>", desc = "Open terminal" },
     },
   },
-  { "mbbill/undotree" },
 }

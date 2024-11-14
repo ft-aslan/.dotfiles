@@ -26,6 +26,7 @@ else
   vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 end
 
+vim.o.mousemoveevent = true
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`

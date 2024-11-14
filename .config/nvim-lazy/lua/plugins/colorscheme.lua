@@ -1,5 +1,9 @@
 return {
   { "ellisonleao/gruvbox.nvim" },
+  { "catppuccin/nvim", name = "catppuccin" },
+  { "rose-pine/neovim", name = "rose-pine" },
+  { "folke/tokyonight.nvim", opts = {} },
+  { "rebelot/kanagawa.nvim" },
   {
     "neanias/everforest-nvim",
     version = false,
