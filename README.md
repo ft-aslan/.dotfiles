@@ -20,6 +20,12 @@ echo ".dotfiles" >> .gitignore
 git clone --bare https://github.com/ft-aslan/.dotfiles.git $HOME/.dotfiles
 ```
 
+- Checkout
+
+```sh
+dotfiles checkout
+```
+
 ### Connect Windows Git Credetentions to WSL
 
 ```sh
