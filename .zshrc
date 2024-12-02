@@ -70,8 +70,10 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions)
+plugins=(zsh-autosuggestions)
 bindkey '^Y' autosuggest-accept
+bindkey '^N' history-search-forward
+bindkey '^P' history-search-backward
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 # source $ZSH_CUSTOM/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 # User configuration
@@ -131,7 +133,7 @@ export PATH=$HOME/.local/bin:$PATH
 export NVIM_APPNAME="nvim-lazy"
 
 #dotnet
-export DOTNET_ROOT=/usr/share/dotnet 
+export DOTNET_ROOT=/usr/share/dotnet
 export PATH=$PATH:$HOME/.dotnet
 export PATH=$PATH:$HOME/.dotnet/tools
 
@@ -139,3 +141,7 @@ export PATH=$PATH:$HOME/.dotnet/tools
 export PATH=$PATH:/usr/local/go/bin
 #go installed by apps
 export PATH=$PATH:$HOME/go/bin
+#zed
+alias zed="zeditor"
+
+eval "$(starship init zsh)"

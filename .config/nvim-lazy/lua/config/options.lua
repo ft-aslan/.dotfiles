@@ -2,7 +2,7 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 if vim.g.neovide then
-  vim.g.neovide_no_custom_clipboard = false
+  -- vim.g.neovide_no_custom_clipboard = false
   vim.o.guifont = "JetBrainsMono Nerd Font:h11"
   vim.g.neovide_cursor_animate_in_insert_mode = false
   local default_path = vim.fn.expand("~")
@@ -26,8 +26,9 @@ else
   vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 end
 
+vim.g.ai_cmp = false
 vim.o.mousemoveevent = true
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.opt.clipboard = "unnamedplus"
+-- vim.opt.clipboard = "unnamedplus"

@@ -1,6 +1,24 @@
 return {
   "jake-stewart/multicursor.nvim",
   branch = "1.0",
+  event = "BufEnter",
+  keys = {
+    {
+      "<esc>",
+      function()
+        local mc = require("multicursor-nvim")
+        if not mc.cursorsEnabled() then
+          mc.enableCursors()
+        elseif mc.hasCursors() then
+          mc.clearCursors()
+        else
+          -- Default <esc> handler.
+          -- Clear search with <esc>
+          vim.cmd("noh")
+        end
+      end,
+    },
+  },
   config = function()
     local mc = require("multicursor-nvim")
 
@@ -24,6 +42,9 @@ return {
 
     -- Add or skip adding a new cursor by matching word/selection
     set({ "n", "v" }, "<leader>mn", function()
+      mc.matchAddCursor(1)
+    end)
+    set({ "n", "v" }, "gm", function()
       mc.matchAddCursor(1)
     end)
     set({ "n", "v" }, "<leader>ms", function()
@@ -63,15 +84,16 @@ return {
     -- Clone every cursor and disable the originals.
     set({ "n", "v" }, "<leader><c-q>", mc.duplicateCursors)
 
-    set("n", "<esc>", function()
-      if not mc.cursorsEnabled() then
-        mc.enableCursors()
-      elseif mc.hasCursors() then
-        mc.clearCursors()
-      else
-        -- Default <esc> handler.
-      end
-    end)
+    -- set("n", "<esc>", function()
+    --   if not mc.cursorsEnabled() then
+    --     mc.enableCursors()
+    --   elseif mc.hasCursors() then
+    --     mc.clearCursors()
+    --   else
+    --     -- Clear search with <esc>
+    --     -- return "<cmd>noh<cr><esc>"
+    --   end
+    -- end)
 
     -- bring back cursors if you accidentally clear them
     set("n", "<leader>gv", mc.restoreCursors)
